@@ -1,7 +1,7 @@
 make html
 ========================================================================
 
-Creates html from markdown.  Translates all .markdown files in the current directory into HTML using the global config.json, file config.  Any json embedded in the markdown is used to add HTML attributes to the genrated HTML.
+Creates html from markdown.  Translates all .markdown files in the current directory into HTML using the global config.json, file config.  Any json embedded in the markdown is used to add HTML attributes to the generated HTML.
 
 
 File config json
@@ -24,7 +24,7 @@ This is the global cofig file.  It is a json object.  Any of the fields can be o
 The valid fields along with their defaults are listed below:
 
 - template: the file name of the HTML template
-    - default:  boilerplate.html
+    - default:  template.html
 - output\_directory: the directory where the final HTML files should be written to
     - default: . (current directory)
 - css: list of css files to include in the `<head>`
