@@ -1,0 +1,4 @@
+{
+    "output_directory": "../bible_verse_actual_output",
+    "modules": ["bible_verse"]
+}
