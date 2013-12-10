@@ -1,0 +1,7 @@
+{
+    "css": ["test2a.css", "css/test2b.css"],
+    "javascript": ["javascript/test2a.js", "test2b.js"],
+    "bible": "Amplified",
+    "date": "10 Dec 2013",
+    "title": "test2"
+}
