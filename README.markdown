@@ -78,7 +78,8 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
-Rename `compare_etrees` module to `etrees_utilities`?
+- Rename `compare_etrees` module to `etrees_utilities`?
+- Should `compare_etrees` assume xml or html content?  In pure XML, white space in text matters.  In HTML, white space at beginning and end of text in block element doesn't matter (except in pre tags).  White space at beginning and end of in-line elements does matter.  Newlines and tabs are treated like spaces and multiple consecutive white space is treated like a single space.  All white space in pre tags matters.
 
 
 

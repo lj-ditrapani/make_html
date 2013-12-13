@@ -33,15 +33,45 @@ class TestBibleVerse(unittest.TestCase):
 
 
 class TestCompareEtrees(unittest.TestCase):
-    
-    def test_compare_etrees(self):
-        one = ET.fromstring("<one></one>")
-        two = ET.fromstring("<two></two>")
+
+    def run_failing_test(self, xml_str_1, xml_str_2, error_message):
+        tree1 = ET.fromstring(xml_str_1)
+        tree2 = ET.fromstring(xml_str_2)
         with self.assertRaises(XMLException) as context:
-            compare_etrees(one, two, '/')
-        self.assertEqual(str(context.exception),
-                         "Tags don't match at /: one two")
-        self.assertTrue(compare_etrees(one, one, '/'))
+            compare_etrees(tree1, tree2, '/')
+        self.assertEqual(str(context.exception), error_message)
+
+    def run_passing_test(self, xml_str_1, xml_str_2):
+        tree1 = ET.fromstring(xml_str_1)
+        tree2 = ET.fromstring(xml_str_2)
+        self.assertTrue(compare_etrees(tree1, tree2, '/'))
+    
+    def test_failing_etrees(self):
+        tests = (
+            ("<one></one>", "<two></two>",
+             "Tags don't match at /: one two"),
+            #(
+            #    '<img src="abc" type="def"></img>',
+            #    '<img type="def" src="xyz" ></img>',
+            #    "Attributes don't match at /img: ...",
+            #),
+        )
+        for str1, str2, message in tests:
+            self.run_failing_test(str1, str2, message)
+
+    def test_passing_etrees(self):
+        tests = (
+            ('<script></script>', '<script> </script>'),
+            ('<script></script>', '<script />'),
+            ('<script></script>', '<script>\n</script>'),
+            ('<p><a> </a><b> </b></p>', '<p><a> </a><b> </b></p>'),
+            (
+                '<img src="abc" type="def"></img>',
+                '<img type="def" src="abc" ></img>'
+            ),
+        )
+        for str1, str2 in tests:
+            self.run_passing_test(str1, str2)
 
 
 class TestFolderConfig(unittest.TestCase):
