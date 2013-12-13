@@ -2,6 +2,7 @@
 # Author:  Lyall Jonathan Di Trapani -----------------------------------
 import unittest, json, os
 import xml.etree.ElementTree as ET
+import compare_etrees
 import make_html
 
 
@@ -16,10 +17,13 @@ class TestBibleVerse(unittest.TestCase):
     def test_bible_verse(self):
         make_html.main()
         # Get expected output as etree
-        with open('../bible_verse_expected_output/test1.html') as f:
-            expected_output = f.read()
-        print expected_output[0:30]
+        expected_output = ET.parse(
+            '../bible_verse_expected_output/test1.html')
         # Get actual output as etree
+        '''
+        actual_output = ET.parse(
+            '../bible_verse_actual_ouptut/test1.html')
+        '''
         # Compare 2
         # Remove newlines??
 
@@ -27,6 +31,15 @@ class TestBibleVerse(unittest.TestCase):
         markdown_files = ['test1.markdown', 'test2.markdown']
         self.assertEqual(make_html.get_all_markdown_files(), markdown_files)
 
+
+class TestCompareEtrees(unittest.TestCase):
+    
+    def test_compare_etrees(self):
+        one = ET.fromstring("<one></one>")
+        two = ET.fromstring("<two></two>")
+        self.assertRaises(compare_etrees.XMLException,
+                          compare_etrees.compare_etrees, one, two, '/')
+        self.assertTrue(compare_etrees.compare_etrees(one, one, '/'))
 
 
 class TestFolderConfig(unittest.TestCase):
