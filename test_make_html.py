@@ -2,7 +2,7 @@
 # Author:  Lyall Jonathan Di Trapani -----------------------------------
 import unittest, json, os
 import xml.etree.ElementTree as ET
-import compare_etrees
+from compare_etrees import compare_etrees, XMLException
 import make_html
 
 
@@ -37,9 +37,11 @@ class TestCompareEtrees(unittest.TestCase):
     def test_compare_etrees(self):
         one = ET.fromstring("<one></one>")
         two = ET.fromstring("<two></two>")
-        self.assertRaises(compare_etrees.XMLException,
-                          compare_etrees.compare_etrees, one, two, '/')
-        self.assertTrue(compare_etrees.compare_etrees(one, one, '/'))
+        with self.assertRaises(XMLException) as context:
+            compare_etrees(one, two, '/')
+        self.assertEqual(str(context.exception),
+                         "Tags don't match at /: one two")
+        self.assertTrue(compare_etrees(one, one, '/'))
 
 
 class TestFolderConfig(unittest.TestCase):
