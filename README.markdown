@@ -75,4 +75,12 @@ Depends on python 2.7 and markdown2.
     sudo pip install markdown2
 
 
+TODO
+----
+
+Rename `compare_etrees` module to `etrees_utilities`?
+
+
+
+
 Author:  Lyall Jonathan Di Trapani
