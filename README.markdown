@@ -25,23 +25,23 @@ The basic properties of the json object along with their default values
 are listed below:
 
 - template: the file name of the HTML template
-    - default:  template.html
+    - default:  `"template.html"`
 - output\_directory: the directory where the final HTML files should be
   written to
-    - default: . (current directory)
+    - default: `"."` (current directory)
 - css: list of css files to include in the `<head>`
-    - default: []
+    - default: `[]`
 - javascript:  list of javascript files to include in the `<head>`
-    - default: []
+    - default: `[]`
 - author:  string
-    - default: "" (the empty string)
+    - default: `""` (the empty string)
 - date:  string; can be any format.  If "now" is specefied, the current
   date is used.
-    - default: "now"
+    - default: `"now"`
 - modules:  list of python modules to run post-processing on the
   generated xml.etree.ElementTree before it is written out to the
   final output HTML file.
-    - default: []
+    - default: `[]`
 
 All of the above properties are
 also valid per-file configuration properties except for the
