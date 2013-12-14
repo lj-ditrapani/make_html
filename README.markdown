@@ -53,6 +53,25 @@ The valid fields along with their defaults are listed below:
     - default: []
 - javascript:  list of javascript files to include in the `<head>`
     - default: []
+- modules:  list of python modules to run post-processing on the
+  generated etree before it is written out to the final output HTML
+  file.  Each python module must have a `main(tree, config)` function
+  that hase two parameters.  The first parameter is the etree created
+  from the markdown and the second parameter is a dictionary of the
+  combined folder-level configuration and per-file configuration.
+  The python modules must already be on the python path.
+- author:  string
+    - default: "" (the empty string)
+- date:  string; can be any format.  If "now" is specefied, the current
+  date is used.
+    - default: "now"
+
+If you are using the `"modules"` properties to do post-processing,
+you can include information to be passed along to your module(s) in the
+configuration file.  Therefore, the json file can contain any arbitrary
+properties and values.  The `make_html.py` script will simply ignore
+the extra properties and pass them along to the additional Python
+modules you have specified.
 
 If the css field is present in both the folder-level configuration
 file, config.json, and the per-file configuration file,
@@ -86,28 +105,16 @@ Actually, the entire file is optional.
 If no config.json file is found in the current directory,
 the defaults values are used.
 
-The valid fields along with their defaults are listed below:
+All fields specified in the _Per-file Configuration_ section are also
+valid folder-level configuration fields.
+In additon to the previous fields, fields specific to the config.json
+file are listed below:
 
 - template: the file name of the HTML template
     - default:  template.html
 - output\_directory: the directory where the final HTML files should be
   written to
     - default: . (current directory)
-- css: list of css files to include in the `<head>`
-    - default: []
-- javascript:  list of javascript files to include in the `<head>`
-    - default: []
-- modules:  list of python modules to run post-processing on the
-  generated etree before it is written out to the final output HTML
-  file.  Each python module must have a `main(tree, config)` function
-  that hase two parameters.  The first parameter is the etree created
-  from the markdown and the second parameter is a dictionary of the
-  combined folder-level configuration and per-file configuration.
-- author:  string
-    - default: "" (the empty string)
-- date:  string; can be any format.  If "now" is specefied, the current
-  date is used.
-    - default: "now"
 
 
 Processing flow
