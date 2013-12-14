@@ -2,25 +2,12 @@ make html
 ========================================================================
 
 Creates html from markdown.
-Translates all .markdown files in the current directory into HTML
-using the folder config.json and per-file config (also json) if present
-to provide processing instructions.
+Translates all .markdown files in the current directory into HTML.
+Configuration and processing directives are specified in json.
+There is an optional folder-level configuration file, config.json,
+as well as optional per-file configuration files (also json).
 Any json embedded in the markdown is used to add HTML attributes to the
 generated HTML.
-
-
-Per File Configuration (json)
------------------------------
-
-Each `<filename>.markdown` can have an optional `<filename>.json`
-configuration file
-
-The valid fields along with their defaults are listed below:
-
-- css: list of css files to include in the `<head>`
-    - default: []
-- javascript:  list of javascript files to include in the `<head>`
-    - default: []
 
 
 HTML attributes in embedded json
@@ -54,9 +41,43 @@ will translate to the following HTML:
     </pre>
 
 
+Per-file Configuration (json)
+-----------------------------
 
-config.json
---------------
+Each `<filename>.markdown` can have an optional `<filename>.json`
+configuration file.
+
+The valid fields along with their defaults are listed below:
+
+- css: list of css files to include in the `<head>`
+    - default: []
+- javascript:  list of javascript files to include in the `<head>`
+    - default: []
+
+If the css field is present in both the folder-level configuration
+file, config.json, and the per-file configuration file,
+the css lists are combined
+and all css files specified in both files are included in the `<head>`
+of the output html file.  This is also true for the javascript field.
+
+If the modules filed is present in both the folder-level configuration
+file, config.json, and the per-file configuration file, the module
+lists are combined and all modules specified in both files are executed.
+
+Example per-file configuration file:
+If you had a file index.markdown, the optional index.json file
+might look like the following.
+
+    {
+        "css": ["base.css", "index.css"],
+        "javascript": ["jquery.js", "index.js"],
+        "date": "2013 Dec 25",
+        "author": "Joe Blow",
+        "modules": ["add_dynamic", "generate_table"]
+    }
+
+Folder-level Configuration:  config.json
+----------------------------------------
 
 This is the global cofig file.
 It is a json object.
@@ -76,6 +97,12 @@ The valid fields along with their defaults are listed below:
     - default: []
 - javascript:  list of javascript files to include in the `<head>`
     - default: []
+- modules:  list of python modules to run post-processing on the
+  generated etree before it is written out to the final output HTML
+  file.  Each python module must have a `main(tree, config)` function
+  that hase two parameters.  The first parameter is the etree created
+  from the markdown and the second parameter is a dictionary of the
+  combined folder-level configuration and per-file configuration.
 - author:  string
     - default: "" (the empty string)
 - date:  string; can be any format.  If "now" is specefied, the current
