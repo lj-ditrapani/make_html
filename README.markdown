@@ -1,36 +1,86 @@
 make html
 ========================================================================
 
-Creates html from markdown.  Translates all .markdown files in the current directory into HTML using the global config.json, file config.  Any json embedded in the markdown is used to add HTML attributes to the generated HTML.
+Creates html from markdown.
+Translates all .markdown files in the current directory into HTML
+using the folder config.json and per-file config (also json) if present
+to provide processing instructions.
+Any json embedded in the markdown is used to add HTML attributes to the
+generated HTML.
 
 
-File config json
-----------------
+Per File Configuration (json)
+-----------------------------
 
 Each `<filename>.markdown` can have an optional `<filename>.json`
+configuration file
+
+The valid fields along with their defaults are listed below:
+
+- css: list of css files to include in the `<head>`
+    - default: []
+- javascript:  list of javascript files to include in the `<head>`
+    - default: []
 
 
 HTML attributes in embedded json
 --------------------------------
 
-Block level (right now only `<p>` and `<pre>` tags) markdown elements can have json in the first line.
+Block level (right now only `<p>` and `<pre>` tags) markdown elements
+can have json in the first line.
+The json must be a single object with strings for all keys and all
+values.
+The object's properties will become the HTML element's attributes.
+For example, the following markdown
+
+    {"id": "id001", "class": "class01"}
+    The paragraph text
+
+        {"class": "prettyprint"}
+        function squar(x) {
+            return x * x;
+        }
+
+will translate to the following HTML:
+
+    <p id="id001" class="class01">
+    The paragraph text
+    </p>
+
+    <pre class="prettyprint">
+    function squar(x) {
+        return x * x;
+    }
+    </pre>
+
 
 
 config.json
 --------------
 
-This is the global cofig file.  It is a json object.  Any of the fields can be omitted.  Actually, the entire file is optional.  If no config.json file is found in the current directory, the defaults values are used.
+This is the global cofig file.
+It is a json object.
+Any of the fields can be omitted.
+Actually, the entire file is optional.
+If no config.json file is found in the current directory,
+the defaults values are used.
 
 The valid fields along with their defaults are listed below:
 
 - template: the file name of the HTML template
     - default:  template.html
-- output\_directory: the directory where the final HTML files should be written to
+- output\_directory: the directory where the final HTML files should be
+  written to
     - default: . (current directory)
 - css: list of css files to include in the `<head>`
     - default: []
 - javascript:  list of javascript files to include in the `<head>`
     - default: []
+- author:  string
+    - default: "" (the empty string)
+- date:  string; can be any format.  If "now" is specefied, the current
+  date is used.
+    - default: "now"
 
 
 Processing flow
