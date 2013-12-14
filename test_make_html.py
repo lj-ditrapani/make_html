@@ -37,7 +37,8 @@ class TestBibleVerse(unittest.TestCase):
 
     def test_folder_config(self):
         expected_config = make_html.DEFAULTS.copy()
-        expected_config['output_directory'] = u'../bible_verse_actual_output'
+        expected_config['output_directory'] = (
+            u'../bible_verse_actual_output')
         expected_config[u'modules'] = [u'bible_verse']
         actual_config = make_html.get_folder_config()
         self.assertEqual(actual_config, expected_config)
