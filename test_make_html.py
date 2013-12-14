@@ -38,23 +38,26 @@ class TestCompareEtrees(unittest.TestCase):
         tree1 = ET.fromstring(xml_str_1)
         tree2 = ET.fromstring(xml_str_2)
         with self.assertRaises(XMLException) as context:
-            compare_etrees(tree1, tree2, '/')
+            compare_etrees(tree1, tree2)
         self.assertEqual(str(context.exception), error_message)
 
     def run_passing_test(self, xml_str_1, xml_str_2):
         tree1 = ET.fromstring(xml_str_1)
         tree2 = ET.fromstring(xml_str_2)
-        self.assertTrue(compare_etrees(tree1, tree2, '/'))
+        self.assertTrue(compare_etrees(tree1, tree2))
     
     def test_failing_etrees(self):
         tests = (
             ("<one></one>", "<two></two>",
              "Tags don't match at /: one two"),
-            #(
-            #    '<img src="abc" type="def"></img>',
-            #    '<img type="def" src="xyz" ></img>',
-            #    "Attributes don't match at /img: ...",
-            #),
+            (
+                '<img src="abc" type="def"></img>',
+                '<img type="def" src="xyz" ></img>',
+                ("Attributes don't match at /img: " +
+                 "{'src': 'abc', 'type': 'def'} " +
+                 "{'src': 'xyz', 'type': 'def'}"
+                ),
+            ),
         )
         for str1, str2, message in tests:
             self.run_failing_test(str1, str2, message)
