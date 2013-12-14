@@ -19,7 +19,7 @@ def get_text(file_name):
 def main():
     config = get_folder_config()
     for file_name in get_all_markdown_files():
-        convert(file_name)
+        convert(file_name, config)
 
 
 def get_folder_config():
@@ -29,8 +29,16 @@ def get_folder_config():
     return config
 
 
-def get_json(file_name):
-    text = get_text('markdown/{0}.markdown'.format(file_name))
+def get_all_markdown_files():
+    return glob.glob("*.markdown")
+
+
+def convert(file_name, folder_config):
+    pass
+
+
+def get_file_config(file_name, folder):
+    text = get_text('{}/{}.markdown'.format(folder, file_name))
     title = text.split('\n', 1)[0].strip()
     config = dict(
         title=title,
@@ -38,16 +46,8 @@ def get_json(file_name):
         javascript=[],
         prettyprint=False,
     )
-    json_file_name = 'markdown/{0}.json'.format(file_name)
+    json_file_name = '{}/{}.json'.format(folder, file_name)
     if os.path.exists(json_file_name):
         json_config = json.load(open(json_file_name, 'U'))
         config.update(json_config)
     return config
-
-
-def get_all_markdown_files():
-    return glob.glob("*.markdown")
-
-
-def convert(file_name):
-    pass
