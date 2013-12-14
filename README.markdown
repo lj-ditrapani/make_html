@@ -7,7 +7,117 @@ Configuration and processing directives are specified in json.
 There is an optional folder-level configuration file, config.json,
 as well as optional per-file configuration files (also json).
 Any json embedded in the markdown is used to add HTML attributes to the
-generated HTML.
+generated HTML.  User-defined post processing is done on a
+xml.etree.ElementTree object generated from the markdown.
+
+
+Folder-level Configuration:  config.json
+----------------------------------------
+
+This is the folder-level configuration file.
+The file is optional.
+It is a single json object.
+Any of the properties of the object can be omitted.
+If no config.json file is found in the current directory,
+the defaults values are used.
+
+The basic properties of the json object along with their default values
+are listed below:
+
+- template: the file name of the HTML template
+    - default:  template.html
+- output\_directory: the directory where the final HTML files should be
+  written to
+    - default: . (current directory)
+- css: list of css files to include in the `<head>`
+    - default: []
+- javascript:  list of javascript files to include in the `<head>`
+    - default: []
+- author:  string
+    - default: "" (the empty string)
+- date:  string; can be any format.  If "now" is specefied, the current
+  date is used.
+    - default: "now"
+- modules:  list of python modules to run post-processing on the
+  generated etree before it is written out to the final output HTML
+  file.  Each python module must have a `main(tree, config)` function
+  that hase two parameters.  The first parameter is the etree created
+  from the markdown and the second parameter is a dictionary of the
+  combined folder-level configuration and per-file configuration.
+  The python modules must already be on the python path.  The
+  `make_html.py` script will load each python module specified and
+  invoke the `main(tree, config)` function of each module.
+    - default: []
+
+All of the above properties are
+also valid per-file configuration properties except for the
+`"template"` and `"output_directory"` properties.
+
+If you are using the `"modules"` properties to do post-processing,
+you can include information to be passed along to your module(s) in the
+configuration file.  Therefore, the json file can contain any arbitrary
+properties and values.  The `make_html.py` script will simply ignore
+the extra properties and pass them along to the additional Python
+modules you have specified.
+
+An example config.json file:
+
+    {
+        "template": "../templates/blog_template.html",
+        "output_directory": "../www",
+        "css": ["prettify.css"],
+        "javascript": ["prettify.js"],
+        "modules": ["transform_lists.py"]
+    }
+
+Per-file Configuration (json)
+-----------------------------
+
+Each `<filename>.markdown` can have an optional `<filename>.json`
+configuration file.  The file contains a single json object.
+
+All properties specified in the _Folder-level Configuration_ section are
+also valid per-file configuration properties except for the
+`"template"` and `"output_directory"` properties.
+The `"template"` and `"output_directory"` properties are specific to the
+config.json file.
+
+As with the folder-level configuration file, config.json, the per-file
+configuration files can also contain any arbitrary properties and
+values to be used by any included python modules for post-processing.
+
+The per-file configuration files inherit the properties of the
+folder-level config.json file.  The properties of the two files are
+combined to create a single configuration dictionary.
+
+If the css property is present in both the folder-level configuration
+file, config.json, and the per-file configuration file,
+the css lists are combined
+and all css files specified in both files are included in the `<head>`
+of the output html file.  This is also true for the javascript property.
+
+If the modules property is present in both the folder-level
+configuration file, config.json,
+and the per-file configuration file, the module
+lists are combined and all modules specified in both files are executed.
+
+All other properties that are specified in both config.json and the 
+per-file configuration file are overridden by the per-file configuration
+file.  This way, you can specify properties that apply to most of your
+files in the folder-level config.json file, and handle special cases
+by over-ridding the property in the per-file configuration file.
+
+Example per-file configuration file:
+If you had a file `example.markdown`, the optional `example.json` file
+might look like the following.
+
+    {
+        "css": ["base.css", "index.css"],
+        "javascript": ["jquery.js", "index.js"],
+        "date": "2013 Dec 25",
+        "author": "Joe Blow",
+        "modules": ["add_dynamic", "generate_table"]
+    }
 
 
 HTML attributes in embedded json
@@ -39,88 +149,6 @@ will translate to the following HTML:
         return x * x;
     }
     </code></pre>
-
-
-Per-file Configuration (json)
------------------------------
-
-Each `<filename>.markdown` can have an optional `<filename>.json`
-configuration file.  The file contains a single json object.
-
-The basic properties of the json object along with their default values
-are listed below:
-
-- css: list of css files to include in the `<head>`
-    - default: []
-- javascript:  list of javascript files to include in the `<head>`
-    - default: []
-- modules:  list of python modules to run post-processing on the
-  generated etree before it is written out to the final output HTML
-  file.  Each python module must have a `main(tree, config)` function
-  that hase two parameters.  The first parameter is the etree created
-  from the markdown and the second parameter is a dictionary of the
-  combined folder-level configuration and per-file configuration.
-  The python modules must already be on the python path.  The
-  `make_html.py` script will load each python module specified and
-  invoke the `main(tree, config)` function of each module.
-    - default: []
-- author:  string
-    - default: "" (the empty string)
-- date:  string; can be any format.  If "now" is specefied, the current
-  date is used.
-    - default: "now"
-
-If you are using the `"modules"` properties to do post-processing,
-you can include information to be passed along to your module(s) in the
-configuration file.  Therefore, the json file can contain any arbitrary
-properties and values.  The `make_html.py` script will simply ignore
-the extra properties and pass them along to the additional Python
-modules you have specified.
-
-If the css property is present in both the folder-level configuration
-file, config.json, and the per-file configuration file,
-the css lists are combined
-and all css files specified in both files are included in the `<head>`
-of the output html file.  This is also true for the javascript property.
-
-If the modules filed is present in both the folder-level configuration
-file, config.json, and the per-file configuration file, the module
-lists are combined and all modules specified in both files are executed.
-
-Example per-file configuration file:
-If you had a file example.markdown, the optional example.json file
-might look like the following.
-
-    {
-        "css": ["base.css", "index.css"],
-        "javascript": ["jquery.js", "index.js"],
-        "date": "2013 Dec 25",
-        "author": "Joe Blow",
-        "modules": ["add_dynamic", "generate_table"]
-    }
-
-
-Folder-level Configuration:  config.json
-----------------------------------------
-
-This is the folder-level configuration file.
-The file is optional.
-It is a single json object.
-Any of the properties of the object can be omitted.
-If no config.json file is found in the current directory,
-the defaults values are used.
-
-All properties specified in the _Per-file Configuration_ section are
-also valid folder-level configuration properties.
-In additon to the previous properties,
-properties specific to the config.json
-file are listed below:
-
-- template: the file name of the HTML template
-    - default:  template.html
-- output\_directory: the directory where the final HTML files should be
-  written to
-    - default: . (current directory)
 
 
 Processing flow
