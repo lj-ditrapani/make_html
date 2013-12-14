@@ -64,6 +64,7 @@ An example config.json file:
         "modules": ["transform_lists.py"]
     }
 
+
 Per-file Configuration (json)
 -----------------------------
 
@@ -145,6 +146,22 @@ will translate to the following HTML:
     </code></pre>
 
 
+HTML Templates
+--------------
+
+A template file should be valid HTML and XML.
+It must contain a `<div>` element with an id of `"content-marker"`.
+The `make_html.py` script completely removes and replaces the `<div>`
+element with the HTML elements generated from the markdown input file.
+
+Do not manually place content inside the `"content-marker"` `<div>`
+tag of the HTML template file.
+The `<div>` element will be completely removed.  
+The `<div>` tag simply acts as a marker where the content should be
+placed.
+It will not be part of the final HTML file.
+
+
 Post-processing Modules
 -----------------------
 
@@ -172,8 +189,8 @@ Processing flow
 ---------------
 
     config.json (folder-level configuration, optional)
-    <filename>.markdown
     <filename>.json (per-file configuration, optional)
+    <filename>.markdown
                ||
                \/
     --------------------------------
@@ -209,7 +226,6 @@ Dependencies
 Depends on python 2.7 and markdown2.
 
     sudo pip install markdown2
-
 
 
 TODO
