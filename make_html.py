@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 # Author:  Lyall Jonathan Di Trapani -----------------------------------
-import json, glob, os
+import json
+import glob
+import os
 import xml.etree.ElementTree as ET
+
 
 DEFAULTS = dict(
     template='template.html',
     output_directory='.',
     css=[],
     javascript=[],
+    author='',
+    date='now',
+    modules=[],
 )
 
 
