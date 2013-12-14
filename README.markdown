@@ -59,8 +59,8 @@ An example config.json file:
     {
         "template": "../templates/blog_template.html",
         "output_directory": "../www",
-        "css": ["prettify.css"],
-        "javascript": ["prettify.js"],
+        "css": ["css/prettify.css"],
+        "javascript": ["js/prettify.js"],
         "modules": ["transform_lists.py"]
     }
 
@@ -128,8 +128,8 @@ For example, the following markdown
     {"id": "id001", "class": "class01"}
     The paragraph text
 
-        {"class": "prettyprint"}
-        function squar(x) {
+        {"class": "prettyprint linenums"}
+        function square(x) {
             return x * x;
         }
 
@@ -139,8 +139,8 @@ will translate to the following HTML:
     The paragraph text
     </p>
 
-    <pre class="prettyprint"><code>
-    function squar(x) {
+    <pre class="prettyprint linenums"><code>
+    function square(x) {
         return x * x;
     }
     </code></pre>
@@ -226,12 +226,6 @@ Dependencies
 Depends on python 2.7 and markdown2.
 
     sudo pip install markdown2
-
-
-TODO
-----
-
-- is it prettify? (check .js, .css, and class)
 
 
 
