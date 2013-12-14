@@ -10,6 +10,14 @@ def get_text(file_name):
         return f.read()
 
 
+def make_folder_config():
+    folder_config = make_html.DEFAULTS.copy()
+    folder_config['output_directory'] = (
+        u'../bible_verse_actual_output')
+    folder_config[u'modules'] = [u'bible_verse']
+    return folder_config
+
+
 class TestBibleVerse(unittest.TestCase):
 
     def setUp(self):
@@ -36,18 +44,24 @@ class TestBibleVerse(unittest.TestCase):
                          ['test1.markdown', 'test2.markdown'])
 
     def test_folder_config(self):
-        expected_config = make_html.DEFAULTS.copy()
-        expected_config['output_directory'] = (
-            u'../bible_verse_actual_output')
-        expected_config[u'modules'] = [u'bible_verse']
+        expected_config = make_folder_config()
         actual_config = make_html.get_folder_config()
         self.assertEqual(actual_config, expected_config)
 
-
-class TestFileConfig(unittest.TestCase):
-
-    def test_parse_paragraph(self):
-        tests = ((), ())
+    def test_file_config(self):
+        folder_config = make_folder_config()
+        expected_config = folder_config.copy()
+        expected_config['css'] = ['test2a.css', 'css/test2b.css']
+        test2_json_contents = dict(
+            css=['test2a.css', 'css/test2b.css'],
+            javascript=['javascript/test2a.js', 'test2b.js'],
+            bible='Amplified',
+            date='10 Dec 2013',
+            title='test2'
+        )
+        expected_config.update(test2_json_contents)
+        actual_config = make_html.get_file_config('test2', folder_config)
+        self.assertEqual(actual_config, expected_config)
 
 
 if __name__ == '__main__':

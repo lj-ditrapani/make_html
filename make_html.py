@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Author:  Lyall Jonathan Di Trapani -----------------------------------
-import json, glob
+import json, glob, os
 import xml.etree.ElementTree as ET
 
 DEFAULTS = dict(
@@ -37,8 +37,8 @@ def convert(file_name, folder_config):
     pass
 
 
-def get_file_config(file_name, folder):
-    text = get_text('{}/{}.markdown'.format(folder, file_name))
+def get_file_config(file_name, folder_config):
+    text = get_text('{}.markdown'.format(file_name))
     title = text.split('\n', 1)[0].strip()
     config = dict(
         title=title,
@@ -46,7 +46,7 @@ def get_file_config(file_name, folder):
         javascript=[],
         prettyprint=False,
     )
-    json_file_name = '{}/{}.json'.format(folder, file_name)
+    json_file_name = '{}.json'.format(file_name)
     if os.path.exists(json_file_name):
         json_config = json.load(open(json_file_name, 'U'))
         config.update(json_config)
