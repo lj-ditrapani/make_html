@@ -39,8 +39,8 @@ are listed below:
   date is used.
     - default: "now"
 - modules:  list of python modules to run post-processing on the
-  generated etree before it is written out to the final output HTML
-  file.
+  generated xml.etree.ElementTree before it is written out to the
+  final output HTML file.
     - default: []
 
 All of the above properties are
@@ -149,13 +149,20 @@ Post-processing Modules
 -----------------------
 
 The `"modules"` configuration property specifies a list of python
-modules to run post-processing on the generated etree before it is
-written out to the final output HTML file.
+modules to run post-processing on the generated xml.etree.ElementTree
+before it is written out to the final output HTML file.
 Each python module must have a `main(tree, config)` function
 that has two parameters.
-The first parameter is the etree created from the markdown and the
+The first parameter is the xml.etree.ElementTree created from the
+markdown and the
 second parameter is a dictionary of the combined folder-level
 configuration and per-file configuration.
+The `main` function must return an xml.etree.ElementTree object.
+
+`main` function signature:
+
+    ElementTree X dictionary -> ElementTree
+
 The python modules must already be on the python path.
 The `make_html.py` script will load each python module specified and
 invoke the `main(tree, config)` function of each module.
