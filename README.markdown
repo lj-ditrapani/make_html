@@ -40,13 +40,7 @@ are listed below:
     - default: "now"
 - modules:  list of python modules to run post-processing on the
   generated etree before it is written out to the final output HTML
-  file.  Each python module must have a `main(tree, config)` function
-  that hase two parameters.  The first parameter is the etree created
-  from the markdown and the second parameter is a dictionary of the
-  combined folder-level configuration and per-file configuration.
-  The python modules must already be on the python path.  The
-  `make_html.py` script will load each python module specified and
-  invoke the `main(tree, config)` function of each module.
+  file.
     - default: []
 
 All of the above properties are
@@ -151,6 +145,22 @@ will translate to the following HTML:
     </code></pre>
 
 
+Post-processing Modules
+-----------------------
+
+The `"modules"` configuration property specifies a list of python
+modules to run post-processing on the generated etree before it is
+written out to the final output HTML file.
+Each python module must have a `main(tree, config)` function
+that has two parameters.
+The first parameter is the etree created from the markdown and the
+second parameter is a dictionary of the combined folder-level
+configuration and per-file configuration.
+The python modules must already be on the python path.
+The `make_html.py` script will load each python module specified and
+invoke the `main(tree, config)` function of each module.
+
+
 Processing flow
 ---------------
 
@@ -195,6 +205,10 @@ Depends on python 2.7 and markdown2.
 
 
 
+TODO
+----
+
+- is it prettify? (check .js, .css, and class)
 
 
 
