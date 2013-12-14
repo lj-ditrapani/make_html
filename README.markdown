@@ -228,5 +228,16 @@ Depends on python 2.7 and markdown2.
     sudo pip install markdown2
 
 
+TODO
+----
+
+- When run, check timestamps and only process files that are
+  out-of-date.
+
+    if time_of(.markdown) > time_of(.html)
+        process
+    else
+        skip
+
 
 Author:  Lyall Jonathan Di Trapani
