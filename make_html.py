@@ -43,17 +43,16 @@ def convert(file_name, folder_config):
     pass
 
 
-def get_file_config(file_name, folder_config):
+def get_file_config(file_name, config):
     text = get_text('{}.markdown'.format(file_name))
     title = text.split('\n', 1)[0].strip()
-    config = dict(
-        title=title,
-        css=[],
-        javascript=[],
-        prettyprint=False,
-    )
+    config['title'] = title
     json_file_name = '{}.json'.format(file_name)
     if os.path.exists(json_file_name):
         json_config = json.load(open(json_file_name, 'U'))
-        config.update(json_config)
+        for key, val in json_config.items():
+            if key in ['css', 'javascript', 'modules']:
+                config[key] = config[key] + val
+            else:
+                config[key] = val
     return config
