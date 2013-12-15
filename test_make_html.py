@@ -7,11 +7,11 @@ import xml.etree.ElementTree as ET
 import make_html
 
 
-def fake_now():
+def mock_now():
     return '09 Sep 1999'
 
 
-make_html.now = fake_now
+make_html.now = mock_now
 
 
 def get_text(file_name):
