@@ -3,6 +3,11 @@ import xml.etree.ElementTree as ET
 
 def main(html, config):
     body = html.find('body')
+    fix_verses(body)
+    add_bible_type(body, config)
+
+
+def fix_verses(body):
     for paragraph in body.findall('p'):
         if paragraph.get('verse') == None:
             continue
@@ -13,6 +18,9 @@ def main(html, config):
         paragraph.set('class', 'verse-box')
         del paragraph.attrib['verse']
         paragraph.text = None
+
+
+def add_bible_type(body, config):
     if config.has_key('bible'):
         body_elements = list(body)
         index = len(body_elements) - 1
