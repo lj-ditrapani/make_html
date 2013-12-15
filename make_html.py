@@ -43,17 +43,18 @@ def get_all_markdown_files():
 
 def convert(file_name, folder_config):
     config = get_file_config(file_name, folder_config)
-    element = markdownToEtree(file_name)
+    content_root = markdownToEtree(file_name)
     # parse attributes and add to root element
-    # element = add_attributes(element)
+    # content_root = add_attributes(content_root)
     # or
-    # add_attributes(element)
+    # add_attributes(content_root)
     # get template as etree
-    html = get_template(config)
-    html.getroot().tail = '\n'
+    tree = get_template(config)
+    html = tree.getroot()
     # insert into template: root's children relpace div
-    insert(element, html)
-    write_tree(html, file_name, config)
+    insert(content_root, html)
+    fix_head(html, config)
+    write_tree(tree, file_name, config)
 
 
 def get_file_config(file_name, config):
@@ -78,12 +79,14 @@ def markdownToEtree(file_name):
 
 
 def get_template(config):
-    return ET.parse(config['template'])
+    tree = ET.parse(config['template'])
+    tree.getroot().tail = '\n'
+    return tree
 
 
-def insert(element, html):
+def insert(content_root, html):
     # get children
-    elements = list(element)
+    elements = list(content_root)
     body = html.find('body')
     body_children = list(body)
     divs = body.findall('div')
@@ -101,6 +104,39 @@ def insert(element, html):
         index += 1
         body.insert(index, element)
     body.remove(content_marker_div)
+
+
+def fix_head(html, config):
+    head = html.find('head')
+    add_css_links(head, config['css'])
+    add_javascript_links(head, config['javascript'])
+    set_title(head, config['title'])
+
+
+def set_title(head, title_text):
+    title = ET.Element('title')
+    title.text = title_text
+    title.tail = '\n'
+    head.append(title)
+
+
+def add_css_links(head, css_file_names):
+    for css_file_name in css_file_names:
+        attrib = dict(href=css_file_name,
+                      rel='stylesheet',
+                      type='text/css')
+        element = ET.Element('link', attrib)
+        element.tail = '\n'
+        head.append(element)
+
+
+def add_javascript_links(head, javascript_file_names):
+    for javascript_file_name in javascript_file_names:
+        attrib = dict(type='text/javascript', src=javascript_file_name)
+        element = ET.Element('script', attrib)
+        element.text = ' '        # Forces an explicit closing tag
+        element.tail = '\n'
+        head.append(element)
 
 
 def write_tree(tree, file_name, config):
