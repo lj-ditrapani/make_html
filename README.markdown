@@ -240,6 +240,14 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
+- Make it nestable; multiple nested templates
+    - Separate function that writes the final output from function that
+      does all the other work.
+    - This way, can call convert function and just return the etree
+      without writting it out to file.
+    - Function that writes out final output also adds `<!DOCTYPE html>`.
+    - javascript and css properties only valid for outermost file config
+      and folder-level config.json
 - When run, check timestamps and only process files that are
   out-of-date.
 
