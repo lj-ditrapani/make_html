@@ -44,8 +44,8 @@ def get_all_markdown_files():
 def convert(file_name, folder_config):
     config = get_file_config(file_name, folder_config)
     content_root = markdownToEtree(file_name)
-    # parse attributes and add to root element
-    # content_root = add_attributes(content_root)
+    # parse attributes and add to content elements
+    add_attributes(content_root)
     # or
     # add_attributes(content_root)
     # get template as etree
@@ -76,6 +76,16 @@ def markdownToEtree(file_name):
     markdown_text = get_text('{}.markdown'.format(file_name))
     html_text = markdown2.markdown(markdown_text)
     return ET.fromstring('<root>\n{}\n</root>\n'.format(html_text))
+
+
+def add_attributes(root):
+    paragraphs = root.findall('p')
+    for paragraph in paragraphs:
+        first_line = paragraph.text.split('\n', 1)[0].strip()
+        if first_line[0] == '{' and first_line[-1] == '}':
+            paragraph.attrib = json.loads(first_line)
+            index = paragraph.text.find('\n')
+            paragraph.text = paragraph.text[index + 1:]
 
 
 def get_template(config):
