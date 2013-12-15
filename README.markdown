@@ -240,6 +240,9 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
+- insert title
+- move attributes from json in text into proper HTML element attributes
+- add bible verse module
 - Make it nestable; multiple nested templates
     - Separate function that writes the final output from function that
       does all the other work.
