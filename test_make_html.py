@@ -12,12 +12,6 @@ def get_text(file_name):
         return f.read()
 
 
-def make_folder_config():
-    folder_config = make_html.DEFAULTS.copy()
-    folder_config['output_directory'] = (
-        u'../bible_verse_actual_output')
-    folder_config['modules'] = [u'bible_verse']
-    return folder_config
 
 
 class TestBibleVerse(unittest.TestCase):
@@ -27,6 +21,13 @@ class TestBibleVerse(unittest.TestCase):
 
     def tearDown(self):
         os.chdir('..')
+
+    def make_folder_config(self):
+        folder_config = make_html.DEFAULTS.copy()
+        folder_config['output_directory'] = (
+            u'../bible_verse_actual_output')
+        folder_config['modules'] = [u'bible_verse']
+        return folder_config
 
     def test_bible_verse(self):
         make_html.main()
@@ -46,12 +47,12 @@ class TestBibleVerse(unittest.TestCase):
                          ['test1.markdown', 'test2.markdown'])
 
     def test_folder_config(self):
-        expected_config = make_folder_config()
+        expected_config = self.make_folder_config()
         actual_config = make_html.get_folder_config()
         self.assertEqual(actual_config, expected_config)
 
     def test_file_config(self):
-        folder_config = make_folder_config()
+        folder_config = self.make_folder_config()
         expected_config = folder_config.copy()
         expected_config['css'] = ['test2a.css', 'css/test2b.css']
         test2_json_contents = {
