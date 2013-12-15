@@ -30,17 +30,18 @@ class TestBibleVerse(unittest.TestCase):
         return folder_config
 
     def test_bible_verse(self):
+        self.maxDiff = None
         make_html.main()
         expected_string = get_text(
             '../bible_verse_expected_output/test1.html')
         actual_string = get_text(
             '../bible_verse_actual_output/test1.html')
-        self.assertEqual(actual_string.split(), expected_string.split())
+        self.assertEqual(actual_string.split('\n'), expected_string.split('\n'))
         expected_string = get_text(
             '../bible_verse_expected_output/test2.html')
         actual_string = get_text(
             '../bible_verse_actual_output/test2.html')
-        self.assertEqual(actual_string.split(), expected_string.split())
+        self.assertEqual(actual_string.split('\n'), expected_string.split('\n'))
 
     def test_get_all_markdown_files(self):
         self.assertEqual(make_html.get_all_markdown_files(),
@@ -77,7 +78,6 @@ class TestConfig(unittest.TestCase):
         os.chdir('..')
 
     def test_config(self):
-        self.maxDiff = None
         expected_config = make_html.DEFAULTS.copy()
         expected_config['output_directory'] = (
             u'../bible_verse_actual_output')
