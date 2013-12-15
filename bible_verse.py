@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 
+
 def main(html, config):
     body = html.find('body')
     for paragraph in body.findall('p'):
@@ -12,3 +13,11 @@ def main(html, config):
         paragraph.set('class', 'verse-box')
         del paragraph.attrib['verse']
         paragraph.text = None
+    if config.has_key('bible'):
+        body_elements = list(body)
+        index = len(body_elements) - 1
+        bible_note = ET.Element('p', {'class': 'footnote'})
+        note = '(All verses from the {} Bible)'
+        bible_note.text = note.format(config['bible'])
+        bible_note.tail = '\n\n'
+        body.insert(index, bible_note)
