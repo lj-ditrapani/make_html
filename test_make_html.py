@@ -7,11 +7,16 @@ import xml.etree.ElementTree as ET
 import make_html
 
 
+def fake_now():
+    return '09 Sep 1999'
+
+
+make_html.now = fake_now
+
+
 def get_text(file_name):
     with open(file_name) as f:
         return f.read()
-
-
 
 
 class TestBibleVerse(unittest.TestCase):
@@ -27,6 +32,7 @@ class TestBibleVerse(unittest.TestCase):
         folder_config['output_directory'] = (
             u'../bible_verse_actual_output')
         folder_config['modules'] = [u'bible_verse']
+        folder_config['author'] = u'Lyall Jonathan Di Trapani'
         return folder_config
 
     def test_bible_verse(self):
