@@ -49,15 +49,11 @@ def convert(file_name, folder_config):
     # or
     # add_attributes(element)
     # get template as etree
-    # html = get_template(config)
+    html = get_template(config)
+    html.getroot().tail = '\n'
     # insert into template: root's children relpace div
-    # instert(element, html)
-    write_tree(element, file_name, config)
-
-def markdownToEtree(file_name):
-    markdown_text = get_text('{}.markdown'.format(file_name))
-    html_text = markdown2.markdown(markdown_text)
-    return ET.fromstring('<root>\n{}\n</root>\n'.format(html_text))
+    insert(element, html)
+    write_tree(html, file_name, config)
 
 
 def get_file_config(file_name, config):
@@ -75,10 +71,41 @@ def get_file_config(file_name, config):
     return config
 
 
+def markdownToEtree(file_name):
+    markdown_text = get_text('{}.markdown'.format(file_name))
+    html_text = markdown2.markdown(markdown_text)
+    return ET.fromstring('<root>\n{}\n</root>\n'.format(html_text))
+
+
+def get_template(config):
+    return ET.parse(config['template'])
+
+
+def insert(element, html):
+    # get children
+    elements = list(element)
+    body = html.find('body')
+    body_children = list(body)
+    divs = body.findall('div')
+    content_marker_div = ''
+    for div in divs:
+        if div.attrib == {'id': 'content-marker'}:
+            content_marker_div = div
+    # if content_marker_div not found, raise error
+    if content_marker_div == '':
+        raise Exception('content_marker_div not found!')
+    # find index of content_marker_div in body_children list
+    index = body_children.index(content_marker_div)
+    # use body.insert for each element in elements
+    for element in elements:
+        index += 1
+        body.insert(index, element)
+    body.remove(content_marker_div)
+
+
 def write_tree(tree, file_name, config):
     out_dir = config['output_directory']
     html_file_name = '{}/{}.html'.format(out_dir, file_name)
     with open(html_file_name, 'w') as html_file:
         html_file.write(u'<!DOCTYPE html>\n')
-        #html_file.write(ET.tostring(tree.getroot()))
-        html_file.write(ET.tostring(tree))
+        html_file.write(ET.tostring(tree.getroot()))
