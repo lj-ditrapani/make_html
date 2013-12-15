@@ -54,6 +54,7 @@ def convert(file_name, folder_config):
     # insert into template: root's children relpace div
     insert(content_root, html)
     fix_head(html, config)
+    post_process(html, config)
     write_tree(tree, file_name, config)
 
 
@@ -147,6 +148,12 @@ def add_javascript_links(head, javascript_file_names):
         element.text = ' '        # Forces an explicit closing tag
         element.tail = '\n'
         head.append(element)
+
+
+def post_process(html, config):
+    for module_name in config['modules']:
+        module = __import__(module_name)
+        module.main(html, config)
 
 
 def write_tree(tree, file_name, config):
