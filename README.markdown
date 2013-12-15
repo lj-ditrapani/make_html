@@ -231,6 +231,9 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
+- Test combining folder-level and per-file configurations
+  css, javascript, and modules lists concatenate, but other properties'
+  values are replaced
 - When run, check timestamps and only process files that are
   out-of-date.
 
@@ -238,6 +241,12 @@ TODO
         process
     else
         skip
+- explain about title.  h1 title must be present on first line.
+
+    Title on fist line
+    ==================
+
+    Second line is `===`
 
 
 Author:  Lyall Jonathan Di Trapani
