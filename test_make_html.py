@@ -38,16 +38,16 @@ class TestBibleVerse(unittest.TestCase):
     def test_bible_verse(self):
         self.maxDiff = None
         make_html.main()
-        expected_string = get_text(
-            '../bible_verse_expected_output/test1.html')
-        actual_string = get_text(
-            '../bible_verse_actual_output/test1.html')
-        self.assertEqual(actual_string.split('\n'), expected_string.split('\n'))
-        expected_string = get_text(
-            '../bible_verse_expected_output/test2.html')
-        actual_string = get_text(
-            '../bible_verse_actual_output/test2.html')
-        self.assertEqual(actual_string.split('\n'), expected_string.split('\n'))
+        self.compare('test1.html')
+        self.compare('test2.html')
+
+    def compare(self, file_name):
+        expected_string = get_text('../bible_verse_expected_output/' +
+                                   file_name)
+        actual_string = get_text('../bible_verse_actual_output/' +
+                                 file_name)
+        self.assertEqual(actual_string.split('\n'),
+                         expected_string.split('\n'))
 
     def test_get_all_markdown_files(self):
         self.assertEqual(make_html.get_all_markdown_files(),
@@ -101,8 +101,6 @@ class TestConfig(unittest.TestCase):
         folder_config = make_html.get_folder_config()
         actual_config = make_html.get_file_config('test', folder_config)
         self.assertEqual(actual_config, expected_config)
-
-        
 
 
 if __name__ == '__main__':
