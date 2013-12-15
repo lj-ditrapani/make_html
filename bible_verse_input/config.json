@@ -1,4 +1,5 @@
 {
     "output_directory": "../bible_verse_actual_output",
-    "modules": ["bible_verse"]
+    "modules": ["bible_verse"],
+    "author": "Lyall Jonathan Di Trapani"
 }
