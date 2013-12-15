@@ -185,6 +185,15 @@ The `make_html.py` script will load each python module specified and
 invoke the `main(tree, config)` function of each module.
 
 
+Title
+-----
+
+The first line of the markdown file becomes the `<title>` set in the
+HTML `<head>` tag.  This can be overridden by specifying a `"title"`
+property in the per-file configuration file, which will be used as
+the `<head>` title instead of the first line in the markdown file.
+
+
 Processing flow
 ---------------
 
