@@ -1,0 +1,6 @@
+{
+    "output_directory": "../bible_verse_actual_output",
+    "css": ["css/a.css", "b.css"],
+    "javascript": ["js/a.js", "js/b.js"],
+    "modules": ["bible_verse"]
+}

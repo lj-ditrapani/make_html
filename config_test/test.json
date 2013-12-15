@@ -1,0 +1,8 @@
+{
+    "css": ["test1.css", "css/test2.css"],
+    "javascript": ["js/test1.js", "test2.js"],
+    "modules": ["foo", "bar"],
+    "bible": "Amplified",
+    "date": "10 Dec 2013",
+    "title": "From Config"
+}
