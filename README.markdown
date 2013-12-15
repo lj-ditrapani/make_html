@@ -243,6 +243,8 @@ TODO
 - When run, check timestamps and only process files that are
   out-of-date.
 
+Ex:
+
     if time_of(.markdown) > time_of(.html)
         process
     else
