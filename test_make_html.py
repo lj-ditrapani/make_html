@@ -34,13 +34,13 @@ class TestBibleVerse(unittest.TestCase):
         expected_string = get_text(
             '../bible_verse_expected_output/test1.html')
         actual_string = get_text(
-            '../bible_verse_actual_ouptut/test1.html')
-        self.assertEqual(actual_string, expected_string)
+            '../bible_verse_actual_output/test1.html')
+        self.assertEqual(actual_string.split(), expected_string.split())
         expected_string = get_text(
             '../bible_verse_expected_output/test2.html')
         actual_string = get_text(
-            '../bible_verse_actual_ouptut/test2.html')
-        self.assertEqual(actual_string, expected_string)
+            '../bible_verse_actual_output/test2.html')
+        self.assertEqual(actual_string.split(), expected_string.split())
 
     def test_get_all_markdown_files(self):
         self.assertEqual(make_html.get_all_markdown_files(),
