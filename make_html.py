@@ -3,6 +3,7 @@
 import json
 import glob
 import os
+import datetime
 import xml.etree.ElementTree as ET
 import markdown2
 
@@ -54,6 +55,7 @@ def convert(file_name, folder_config):
     # insert into template: root's children relpace div
     insert(content_root, html)
     fix_head(html, config)
+    add_author_and_date(html, config)
     post_process(html, config)
     write_tree(tree, file_name, config)
 
@@ -148,6 +150,27 @@ def add_javascript_links(head, javascript_file_names):
         element.text = ' '        # Forces an explicit closing tag
         element.tail = '\n'
         head.append(element)
+
+
+def add_author_and_date(html, config):
+    if config['author'] == '' and config['date'] == '':
+        return
+    author = config['author']
+    if author != '':
+        author = 'Author:  {} '.format(author)
+    if config['date'] == 'now':
+        date = now()
+    else:
+        date = config['date']
+    text = author + date
+    body = html.find('body')
+    footnote = ET.SubElement(body, 'p', {'class': 'footnote'})
+    footnote.text = text
+    footnote.tail = '\n\n'
+
+
+def now():
+    return datetime.datetime.now().strftime('%d %b %Y')
 
 
 def post_process(html, config):
