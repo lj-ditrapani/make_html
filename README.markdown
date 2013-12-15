@@ -240,6 +240,9 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
+- Fix documentation for post-processing with python modules
+    - main function takes the root (html tag) etree Element and modifies
+      it as neccessary as opposed to returning a new ElementTree
 - insert title
 - move attributes from json in text into proper HTML element attributes
 - add bible verse module
