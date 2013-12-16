@@ -243,7 +243,8 @@ TODO
 - Fix documentation for post-processing with python modules
     - main function takes the root (html tag) etree Element and modifies
       it as neccessary as opposed to returning a new ElementTree
-- insert title
+- Add test to capture that each folder config is copied fresh each time
+  and not overwritten
 - move attributes from json in text into proper HTML element attributes
 - add bible verse module
 - Make it nestable; multiple nested templates
