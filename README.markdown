@@ -240,13 +240,17 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
+- Add disable attribute parsing configuration property
+- Add alternate input directory configuration property
+- Add alternate config.json folder path command line argument
 - Fix documentation for post-processing with python modules
     - main function takes the root (html tag) etree Element and modifies
       it as neccessary as opposed to returning a new ElementTree
 - Add test to capture that each folder config is copied fresh each time
   and not overwritten
-- move attributes from json in text into proper HTML element attributes
-- add bible verse module
+- Add more tests 
+- Add tests for corner cases
+- Add descriptive exceptions to make it more user friendly & tests
 - Make it nestable; multiple nested templates
     - Separate function that writes the final output from function that
       does all the other work.
