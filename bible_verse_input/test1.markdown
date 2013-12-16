@@ -19,3 +19,5 @@ A paragraph with
 attribue key1="value1"
 and
 attribue key2="value2"
+
+A paragraph with a unicod character (–).
