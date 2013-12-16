@@ -28,7 +28,7 @@ def main():
     config = get_folder_config()
     for markdown_file_name in get_all_markdown_files():
         file_name, ext = os.path.splitext(markdown_file_name)
-        convert(file_name, config)
+        convert(file_name, config.copy())
 
 
 def get_folder_config():
@@ -78,7 +78,8 @@ def get_file_config(file_name, config):
 def markdownToEtree(file_name):
     markdown_text = get_text('{}.markdown'.format(file_name))
     html_text = markdown2.markdown(markdown_text)
-    return ET.fromstring('<root>\n{}\n</root>\n'.format(html_text))
+    root_text = u'<root>\n{}\n</root>\n'.format(html_text).encode('utf-8')
+    return ET.fromstring(root_text)
 
 
 def add_attributes(root):
@@ -184,7 +185,7 @@ def write_tree(tree, file_name, config):
     html_file_name = '{}/{}.html'.format(out_dir, file_name)
     with open(html_file_name, 'w') as html_file:
         html_file.write(u'<!DOCTYPE html>\n')
-        html_file.write(ET.tostring(tree.getroot()))
+        html_file.write(ET.tostring(tree.getroot(), encoding='utf-8'))
 
 
 if __name__ == '__main__':
