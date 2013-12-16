@@ -185,3 +185,7 @@ def write_tree(tree, file_name, config):
     with open(html_file_name, 'w') as html_file:
         html_file.write(u'<!DOCTYPE html>\n')
         html_file.write(ET.tostring(tree.getroot()))
+
+
+if __name__ == '__main__':
+    main()
