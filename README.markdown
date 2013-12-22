@@ -166,23 +166,28 @@ Post-processing Modules
 -----------------------
 
 The `"modules"` configuration property specifies a list of python
-modules to run post-processing on the generated xml.etree.ElementTree
+modules to run post-processing on the generated xml.etree.Element
 before it is written out to the final output HTML file.
-Each python module must have a `main(tree, config)` function
+Each python module must have a `main(html, config)` function
 that has two parameters.
-The first parameter is the xml.etree.ElementTree created from the
-markdown and the
+The first parameter is the xml.etree.Element created from the
+markdown (it is an HTML tag) and the
 second parameter is a dictionary of the combined folder-level
 configuration and per-file configuration.
-The `main` function must return an xml.etree.ElementTree object.
+The `main` function returns None, therefor, the xml.etree.Element
+object must be modified in-place by the `main()` function.
 
 `main` function signature:
 
-    ElementTree X dictionary -> ElementTree
+    Element X dictionary -> None
 
 The python modules must already be on the python path.
 The `make_html.py` script will load each python module specified and
 invoke the `main(tree, config)` function of each module.
+The modules are executed in the order they are declared in the
+configuration files.  Modules declared in the folder-level
+`config.json` file are executed before any modules declared in the
+per-file configuration.
 
 
 Title
@@ -215,7 +220,7 @@ Processing flow
     --------------------------------
                ||
                \/
-        etree (+ attributes)
+      etree Element (+ attributes)
                ||
                \/
     --------------------------------
@@ -243,9 +248,6 @@ TODO
 - Add disable attribute parsing configuration property
 - Add alternate input directory configuration property
 - Add alternate config.json folder path command line argument
-- Fix documentation for post-processing with python modules
-    - main function takes the root (html tag) etree Element and modifies
-      it as neccessary as opposed to returning a new ElementTree
 - Add test to capture that each folder config is copied fresh each time
   and not overwritten
 - Add more tests 
