@@ -245,7 +245,10 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
-- Add disable attribute parsing configuration property
+- Create SWE 430 acceptance tests
+- Replace SWE 430 code to use this instead
+- Update Sofi's sites to use this
+- Add "_disable attribute parsing_" configuration property
 - Add alternate input directory configuration property
 - Add alternate config.json folder path command line argument
 - Add test to capture that each folder config is copied fresh each time
