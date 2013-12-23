@@ -47,8 +47,6 @@ def convert(file_name, folder_config):
     content_root = markdownToEtree(file_name)
     # parse attributes and add to content elements
     add_attributes(content_root)
-    # or
-    # add_attributes(content_root)
     # get template as etree
     tree = get_template(config)
     html = tree.getroot()
