@@ -245,6 +245,12 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
+- Link by itself with no paragraph text crashed during get attribute
+  function: create test and fix bug
+- Find the div with id = content-marker even if it is not directly in
+  the body and replace with actual content from markdown
+  Right now, only works if div is child of body.
+  Can't handle nested div (use iter?)
 - Create SWE 430 acceptance tests
 - Replace SWE 430 code to use this instead
 - Update Sofi's sites to use this
