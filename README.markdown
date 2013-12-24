@@ -246,7 +246,7 @@ TODO
 ----
 
 - Find the div with id = content-marker even if it is not directly in
-  the body and replace with actual content from markdown
+  the body and replace with actual content from markdown.
   Right now, only works if div is child of body.
   Can't handle nested div (use iter?)
 - Create SWE 430 acceptance tests
