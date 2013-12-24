@@ -103,5 +103,33 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(actual_config, expected_config)
 
 
+class TestAttributes(unittest.TestCase):
+
+    def run_test(self, input, output):
+        root = ET.fromstring(input)
+        make_html.add_attributes(root)
+        self.assertEqual(ET.tostring(root), output)
+
+    def test_add_attributes(self):
+        input = ('\n<root>\n\n<p>{"id": "id1", "class": "class1"}\n' +
+                 'The paragraph text</p>\n\n' +
+                 '<p>Another paragraph</p>\n\n' +
+                 '<p>{"key1": "val1", "key2": "val2"}\n' +
+                 'The paragraph text</p>\n\n</root>')
+        output = ('<root>\n\n<p class="class1" id="id1">' +
+                  'The paragraph text</p>\n\n' +
+                  '<p>Another paragraph</p>\n\n' +
+                  '<p key1="val1" key2="val2">' +
+                  'The paragraph text</p>\n\n</root>')
+        self.run_test(input, output)
+
+    
+    def test_handle_p_with_no_text(self):
+        root_text = '<root><p><a /></p></root>'
+        root = ET.fromstring(root_text)
+        make_html.add_attributes(root)
+        self.assertEqual(ET.tostring(root), root_text)
+
+
 if __name__ == '__main__':
     unittest.main()

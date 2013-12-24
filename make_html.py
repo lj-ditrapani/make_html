@@ -83,6 +83,8 @@ def markdownToEtree(file_name):
 def add_attributes(root):
     paragraphs = root.findall('p')
     for paragraph in paragraphs:
+        if paragraph.text == None:
+            continue
         first_line = paragraph.text.split('\n', 1)[0].strip()
         if first_line[0] == '{' and first_line[-1] == '}':
             paragraph.attrib = json.loads(first_line)
