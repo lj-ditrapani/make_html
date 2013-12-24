@@ -249,6 +249,9 @@ TODO
   the body and replace with actual content from markdown.
   Right now, only works if div is child of body.
   Can't handle nested div (use iter?)
+    - `insert(content_root, html)`
+    - Write tests
+    - Fix bug
 - Create SWE 430 acceptance tests
 - Replace SWE 430 code to use this instead
 - Update Sofi's sites to use this

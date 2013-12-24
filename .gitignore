@@ -1,2 +1,11 @@
 *.pyc
 /bible_verse_actual_output
+
+
+# TODO:  delete these files once finished
+# ---------------------------------------
+# Old bible verse
+/convert.py
+/test_convert.py
+# SWE 430
+/convert_markdown.py
