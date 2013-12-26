@@ -244,7 +244,8 @@ Depends on python 2.7 and markdown2.
 
 TODO
 ----
-- Usage:
+
+Usage:
 
     make_html
     make_html -c path/to/filename.json
