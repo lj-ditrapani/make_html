@@ -99,26 +99,37 @@ def get_template(config):
 
 
 def insert(content_root, html):
-    # get children
-    elements = list(content_root)
     body = html.find('body')
-    body_children = list(body)
-    divs = body.findall('div')
-    content_marker_div = ''
+    parent = find_content_marker_parent(body)
+    # get children
+    new_elements = list(content_root)
+    children = list(parent)
+    divs = parent.findall('div')
     for div in divs:
         if div.attrib == {'id': 'content-marker'}:
             content_marker_div = div
-    # if content_marker_div not found, raise error
-    if content_marker_div == '':
-        raise MakeHTMLError('div with id="content-marker" not ' +
-                            'found in HTML template')
-    # find index of content_marker_div in body_children list
-    index = body_children.index(content_marker_div)
-    # use body.insert for each element in elements
-    for element in elements:
+    # find index of content_marker_div in children list
+    index = children.index(content_marker_div)
+    # use parent.insert for each element in elements
+    for element in new_elements:
         index += 1
-        body.insert(index, element)
-    body.remove(content_marker_div)
+        parent.insert(index, element)
+    parent.remove(content_marker_div)
+
+
+def find_content_marker_parent(body):
+    for element in body.iter():
+        if has_child_content_marker(element):
+            return element
+    raise MakeHTMLError('<div> tag with id="content-marker" not ' +
+                        'found in HTML template')
+
+
+def has_child_content_marker(element):
+    for child in list(element):
+        if child.attrib == {'id': 'content-marker'}:
+            return True
+    return False
 
 
 def fix_head(html, config):
