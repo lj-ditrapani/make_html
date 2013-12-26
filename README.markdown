@@ -245,25 +245,20 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
-- Create SWE 430 acceptance tests
-- Replace SWE 430 code to use this instead
-- Update Sofi's sites to use this
+- Add test to capture that each folder config is copied fresh each time
+  and not overwritten
 - Add "_disable attribute parsing_" configuration property
 - Add alternate input directory configuration property
 - Add alternate config.json folder path command line argument
-- Add test to capture that each folder config is copied fresh each time
-  and not overwritten
 - Add more tests 
 - Add tests for corner cases
 - Add descriptive exceptions to make it more user friendly & tests
-- Make it nestable; multiple nested templates
-    - Separate function that writes the final output from function that
-      does all the other work.
-    - This way, can call convert function and just return the etree
-      without writting it out to file.
-    - Function that writes out final output also adds `<!DOCTYPE html>`.
-    - javascript and css properties only valid for outermost file config
-      and folder-level config.json
+- Create WomenOfVictory acceptance tests
+- Create MyLittleConqueror acceptance tests
+- Create MyLittleConqueror2 acceptance tests
+- Update Sofi's sites to use this
+- Create SWE 430 acceptance tests
+- Replace SWE 430 code to use this instead
 - When run, check timestamps and only process files that are
   out-of-date.
 
@@ -273,6 +268,15 @@ Ex:
         process
     else
         skip
+
+- Make it nestable; multiple nested templates
+    - Separate function that writes the final output from function that
+      does all the other work.
+    - This way, can call convert function and just return the etree
+      without writting it out to file.
+    - Function that writes out final output also adds `<!DOCTYPE html>`.
+    - javascript and css properties only valid for outermost file config
+      and folder-level config.json
 
 
 
