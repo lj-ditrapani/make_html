@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # Author:  Lyall Jonathan Di Trapani -----------------------------------
 import os
-import json
 import unittest
 import xml.etree.ElementTree as ET
 import make_html
@@ -103,7 +102,7 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(actual_config, expected_config)
 
 
-class TestAttributes(unittest.TestCase):
+class TestAddAttributes(unittest.TestCase):
 
     def run_test(self, input, output):
         root = ET.fromstring(input)
@@ -126,9 +125,7 @@ class TestAttributes(unittest.TestCase):
     
     def test_handle_p_with_no_text(self):
         root_text = '<root><p><a /></p></root>'
-        root = ET.fromstring(root_text)
-        make_html.add_attributes(root)
-        self.assertEqual(ET.tostring(root), root_text)
+        self.run_test(root_text, root_text)
 
 
 if __name__ == '__main__':
