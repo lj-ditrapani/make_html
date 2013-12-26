@@ -245,8 +245,6 @@ Depends on python 2.7 and markdown2.
 TODO
 ----
 
-- Add test to capture that each folder config is copied fresh each time
-  and not overwritten
 - Add "_disable attribute parsing_" configuration property
 - Add alternate input directory configuration property
 - Add alternate config.json folder path command line argument

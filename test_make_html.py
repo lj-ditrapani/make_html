@@ -102,6 +102,24 @@ class TestConfig(unittest.TestCase):
         actual_config = make_html.get_file_config('test', folder_config)
         self.assertEqual(actual_config, expected_config)
 
+    def test_defaults_config_copy(self):
+        defaults = make_html.DEFAULTS.copy()
+        folder_config = make_html.get_folder_config()
+        self.assertEqual(folder_config['css'], ['css/a.css', 'b.css'])
+        self.assertEqual(make_html.DEFAULTS['css'], [])
+        self.assertEqual(make_html.DEFAULTS, defaults)
+
+    def test_folder_config_copy(self):
+        folder_config = make_html.get_folder_config()
+        folder_config_copy = folder_config.copy()
+        actual_config = make_html.get_file_config('test', folder_config)
+        self.assertEqual(folder_config_copy['javascript'],
+                         ['js/a.js', 'js/b.js'])
+        self.assertEqual(actual_config['javascript'],
+                         [u'js/a.js', u'js/b.js',
+                          u'js/test1.js', u'test2.js'])
+        self.assertEqual(folder_config, folder_config_copy)
+
 
 class TestAddAttributes(unittest.TestCase):
 
