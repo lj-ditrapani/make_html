@@ -102,6 +102,6 @@ class TestInsert(unittest.TestCase):
         with self.assertRaises(make_html.MakeHTMLError) as context:
             make_html.insert(content_root, html)
         self.assertEqual(
-            str(context.exception),
+            context.exception.message,
             'div with id="content-marker" not found in HTML template'
         )
