@@ -101,17 +101,9 @@ def get_template(config):
 def insert(content_root, html):
     body = html.find('body')
     parent = find_content_marker_parent(body)
-    # get children
-    new_elements = list(content_root)
-    children = list(parent)
-    divs = parent.findall('div')
-    for div in divs:
-        if div.attrib == {'id': 'content-marker'}:
-            content_marker_div = div
-    # find index of content_marker_div in children list
-    index = children.index(content_marker_div)
+    index, content_marker_div = find_content_marker_div(parent)
     # use parent.insert for each element in elements
-    for element in new_elements:
+    for element in list(content_root):
         index += 1
         parent.insert(index, element)
     parent.remove(content_marker_div)
@@ -130,6 +122,12 @@ def has_child_content_marker(element):
         if child.attrib == {'id': 'content-marker'}:
             return True
     return False
+
+
+def find_content_marker_div(parent):
+    for index, child in enumerate(list(parent)):
+        if child.attrib == {'id': 'content-marker'}:
+            return index, child
 
 
 def fix_head(html, config):
