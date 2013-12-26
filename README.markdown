@@ -250,7 +250,7 @@ TODO
   Right now, only works if div is child of body.
   Can't handle nested div (use iter?)
     - `insert(content_root, html)`
-    - Write tests
+    - Test is written
     - Fix bug
 - Create SWE 430 acceptance tests
 - Replace SWE 430 code to use this instead

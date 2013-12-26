@@ -4,6 +4,7 @@ import os
 import unittest
 import xml.etree.ElementTree as ET
 import make_html
+from test_insert import TestInsert
 
 
 def mock_now():
