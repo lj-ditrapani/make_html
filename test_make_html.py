@@ -79,14 +79,18 @@ class TestConfig(unittest.TestCase):
 
     def setUp(self):
         os.chdir('config_test')
+        self.defaults = make_html.DEFAULTS.copy()
+        self.folder_config = make_html.get_folder_config()
+        self.folder_config_copy = self.folder_config.copy()
 
     def tearDown(self):
         os.chdir('..')
 
     def test_config(self):
-        expected_config = make_html.DEFAULTS.copy()
+        expected_config = self.defaults
         expected_config['output_directory'] = (
-            u'../bible_verse_actual_output')
+            u'../bible_verse_actual_output'
+        )
         expected_config['css'] = [u'css/a.css', u'b.css', u'test1.css',
                                   u'css/test2.css']
         expected_config['javascript'] = [u'js/a.js', u'js/b.js',
@@ -98,27 +102,36 @@ class TestConfig(unittest.TestCase):
             'title': u'From Config',
         }
         expected_config.update(new_properties)
-        folder_config = make_html.get_folder_config()
-        actual_config = make_html.get_file_config('test', folder_config)
+        actual_config = make_html.get_file_config('test',
+                                                  self.folder_config)
         self.assertEqual(actual_config, expected_config)
 
     def test_defaults_config_copy(self):
-        defaults = make_html.DEFAULTS.copy()
-        folder_config = make_html.get_folder_config()
-        self.assertEqual(folder_config['css'], ['css/a.css', 'b.css'])
+        self.assertEqual(self.folder_config['css'],
+                         ['css/a.css', 'b.css'])
         self.assertEqual(make_html.DEFAULTS['css'], [])
-        self.assertEqual(make_html.DEFAULTS, defaults)
+        self.assertEqual(make_html.DEFAULTS, self.defaults)
 
     def test_folder_config_copy(self):
-        folder_config = make_html.get_folder_config()
-        folder_config_copy = folder_config.copy()
+        folder_config = self.folder_config
         actual_config = make_html.get_file_config('test', folder_config)
-        self.assertEqual(folder_config_copy['javascript'],
+        self.assertEqual(self.folder_config_copy['javascript'],
                          ['js/a.js', 'js/b.js'])
         self.assertEqual(actual_config['javascript'],
                          [u'js/a.js', u'js/b.js',
                           u'js/test1.js', u'test2.js'])
-        self.assertEqual(folder_config, folder_config_copy)
+        self.assertEqual(folder_config, self.folder_config_copy)
+
+    def test_file_config_missing(self):
+        self.folder_config_copy['title'] = 'Test Title'
+        file_config = make_html.get_file_config('test2',
+                                                self.folder_config)
+        self.assertEqual(file_config, self.folder_config_copy)
+
+    def test_overwrite_title(self):
+        file_config = make_html.get_file_config('test3',
+                                                self.folder_config)
+        self.assertEqual(file_config['title'], 'Overwritten Title')
 
 
 class TestAddAttributes(unittest.TestCase):
