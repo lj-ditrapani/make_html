@@ -85,7 +85,7 @@ output_text = '''
 </body>
 
 </html>'''
-        
+
 
 class TestInsert(unittest.TestCase):
 
@@ -99,5 +99,5 @@ class TestInsert(unittest.TestCase):
     def test_insert_div_missing_content_marker(self):
         content_root = ET.fromstring(content_root_text)
         html = ET.fromstring(html_text)
-        self.assertRaises(make_html.MakeHTMLException, make_html.insert,
+        self.assertRaises(make_html.MakeHTMLError, make_html.insert,
                           content_root, html)

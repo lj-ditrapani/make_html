@@ -123,7 +123,6 @@ class TestAddAttributes(unittest.TestCase):
                   'The paragraph text</p>\n\n</root>')
         self.run_test(input, output)
 
-    
     def test_handle_p_with_no_text(self):
         root_text = '<root><p><a /></p></root>'
         self.run_test(root_text, root_text)

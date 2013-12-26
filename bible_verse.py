@@ -9,7 +9,7 @@ def main(html, config):
 
 def fix_verses(body):
     for paragraph in body.findall('p'):
-        if paragraph.get('verse') == None:
+        if paragraph.get('verse') is None:
             continue
         span = ET.Element('span', {'class': 'reference'})
         span.text = '\n' + paragraph.get('verse') + '\n'
@@ -21,7 +21,7 @@ def fix_verses(body):
 
 
 def add_bible_type(body, config):
-    if config.has_key('bible'):
+    if 'bible' in config:
         body_elements = list(body)
         index = len(body_elements) - 1
         bible_note = ET.Element('p', {'class': 'footnote'})

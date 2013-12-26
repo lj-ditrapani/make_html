@@ -83,7 +83,7 @@ def markdownToEtree(file_name):
 def add_attributes(root):
     paragraphs = root.findall('p')
     for paragraph in paragraphs:
-        if paragraph.text == None:
+        if paragraph.text is None:
             continue
         first_line = paragraph.text.split('\n', 1)[0].strip()
         if first_line[0] == '{' and first_line[-1] == '}':
@@ -110,7 +110,8 @@ def insert(content_root, html):
             content_marker_div = div
     # if content_marker_div not found, raise error
     if content_marker_div == '':
-        raise Exception('content_marker_div not found!')
+        raise MakeHTMLError('div with id="content-marker" not ' +
+                            'found in HTML template')
     # find index of content_marker_div in body_children list
     index = body_children.index(content_marker_div)
     # use body.insert for each element in elements
@@ -187,6 +188,9 @@ def write_tree(tree, file_name, config):
         html_file.write(u'<!DOCTYPE html>\n')
         html_file.write(ET.tostring(tree.getroot(), encoding='utf-8'))
 
+
+class MakeHTMLError(Exception):
+    pass
 
 if __name__ == '__main__':
     main()
