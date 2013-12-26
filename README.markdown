@@ -244,10 +244,25 @@ Depends on python 2.7 and markdown2.
 
 TODO
 ----
+- Usage:
+
+    make_html
+    make_html -c path/to/filename.json
+    make_html --config path/to/filename.json
+    make_html path/to/input_directory/
+    make_html --config path/to/filename.json path/to/input_directory/
+    make_html [-c file_path] [--config folder_path] \
+              [path/to/input_directory/]
 
 - Add "_disable attribute parsing_" configuration property
+    - `"attribute_parsing": true or false`
 - Add alternate input directory configuration property
+    - `"input_directory": "."`
+    - can be set via command line as well
+    - config files overwrite command line settings
 - Add alternate config.json folder path command line argument
+    - `"folder_config_directory": "."`
+    - Only set through command line, never by config files
 - Add more tests 
 - Add tests for corner cases
 - Add descriptive exceptions to make it more user friendly & tests
