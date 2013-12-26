@@ -28,7 +28,7 @@ def main():
     config = get_folder_config()
     for markdown_file_name in get_all_markdown_files():
         file_name, ext = os.path.splitext(markdown_file_name)
-        convert(file_name, config.copy())
+        convert(file_name, config)
 
 
 def get_folder_config():
@@ -58,7 +58,8 @@ def convert(file_name, folder_config):
     write_tree(tree, file_name, config)
 
 
-def get_file_config(file_name, config):
+def get_file_config(file_name, folder_config):
+    config = folder_config.copy()
     text = get_text('{}.markdown'.format(file_name))
     title = text.split('\n', 1)[0].strip()
     config['title'] = title
