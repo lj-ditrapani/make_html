@@ -102,7 +102,6 @@ def insert(content_root, html):
     body = html.find('body')
     parent = find_content_marker_parent(body)
     index, content_marker_div = find_content_marker_div(parent)
-    # use parent.insert for each element in elements
     for element in list(content_root):
         index += 1
         parent.insert(index, element)
