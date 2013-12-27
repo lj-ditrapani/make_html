@@ -264,9 +264,7 @@ Usage:
 - Add alternate config.json folder path command line argument
     - `"folder_config_directory": "."`
     - Only set through command line, never by config files
-- Add more tests 
-- Add tests for corner cases
-- Add descriptive exceptions to make it more user friendly & tests
+- Add descriptive exceptions to make it more user friendly & test them
 - Create WomenOfVictory acceptance tests
 - Create MyLittleConqueror acceptance tests
 - Create MyLittleConqueror2 acceptance tests
@@ -291,6 +289,7 @@ Ex:
     - Function that writes out final output also adds `<!DOCTYPE html>`.
     - javascript and css properties only valid for outermost file config
       and folder-level config.json
+- SWE 430 dos vs unix newlines?  How to handle?
 
 
 

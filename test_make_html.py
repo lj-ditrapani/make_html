@@ -5,6 +5,7 @@ import unittest
 import xml.etree.ElementTree as ET
 import make_html
 from test_insert import TestInsert
+from test_add_author_and_date import TestAddAuthorAndDate
 
 
 def mock_now():
