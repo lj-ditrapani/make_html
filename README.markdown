@@ -265,7 +265,6 @@ Usage:
     - `"folder_config_directory": "."`
     - Only set through command line, never by config files
 - Add descriptive exceptions to make it more user friendly & test them
-- Create WomenOfVictory acceptance tests
 - Create MyLittleConqueror acceptance tests
 - Create MyLittleConqueror2 acceptance tests
 - Update Sofi's sites to use this
@@ -290,6 +289,7 @@ Ex:
     - javascript and css properties only valid for outermost file config
       and folder-level config.json
 - SWE 430 dos vs unix newlines?  How to handle?
+- Make test directory for tests?
 
 
 

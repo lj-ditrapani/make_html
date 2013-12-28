@@ -20,6 +20,28 @@ def get_text(file_name):
         return f.read()
 
 
+class TestWomanOfVictory(unittest.TestCase):
+
+    def setUp(self):
+        os.chdir('woman_of_victory_input')
+
+    def tearDown(self):
+        os.chdir('..')
+
+    def test_wov(self):
+        make_html.main()
+        self.compare('Mark2.html')
+
+    def compare(self, file_name):
+        self.maxDiff = None
+        expected_string = get_text('../woman_of_victory_expected_output/' +
+                                   file_name)
+        actual_string = get_text('../woman_of_victory_actual_output/' +
+                                 file_name)
+        self.assertEqual(actual_string.split('\n'),
+                         expected_string.split('\n'))
+
+
 class TestBibleVerse(unittest.TestCase):
 
     def setUp(self):

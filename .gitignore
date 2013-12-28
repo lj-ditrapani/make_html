@@ -1,5 +1,6 @@
 *.pyc
 /bible_verse_actual_output
+/woman_of_victory_actual_output
 
 
 # TODO:  delete these files once finished
